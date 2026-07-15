@@ -1,0 +1,12 @@
+Subject: {{business_name}} - more handyman jobs in {{city}}?
+
+Hi {{first_name}},
+
+I came across {{business_name}} while looking at handyman services around {{city}}. {{observation}}
+
+I run Meta (Facebook and Instagram) ads for handyman and garage door pros, bringing in steady repair and install jobs from local homeowners. I'll run the first 30 days completely free. You only cover the ad spend to Meta directly, so you can see real leads before paying me anything.
+
+Worth a 15-minute call this week?
+
+{{sender_name}}
+ME Growth · {{sender_phone}}

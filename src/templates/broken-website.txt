@@ -1,0 +1,12 @@
+Subject: {{business_name}} - your website isn't loading
+
+Hi,
+
+I came across {{business_name}} and tried visiting your website — but it's not loading for visitors right now, which means anyone searching for a {{business_type}} and finding you can't actually reach you.
+
+I help local businesses fix their online presence and run paid ads on Google and Meta to bring in consistent leads, and I'd love to offer your first 30 days completely free.
+
+Worth a quick 15-minute call to sort this out?
+
+{{sender_name}}
+{{sender_phone}}

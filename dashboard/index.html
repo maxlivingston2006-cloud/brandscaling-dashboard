@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ─── App shell ─────────────────────────────────────────────────────── -->
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <span class="brand-text">
+          Command Center
+          <small>Dashboard</small>
+        </span>
+      </div>
+
+      <nav class="nav" id="nav">
+        <span class="nav-section-label">Workspace</span>
+        <a class="nav-item" href="#overview" data-view="overview">
+          <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 13h8V3H3v10Zm0 8h8v-6H3v6Zm10 0h8V11h-8v10Zm0-18v6h8V3h-8Z"/></svg>
+          <span class="nav-label">Overview</span>
+        </a>
+
+        <span class="nav-section-label">Growth</span>
+        <a class="nav-item" href="#scraper" data-view="scraper">
+          <svg viewBox="0 0 24 24" class="nav-icon"><path d="M11 4a7 7 0 1 0 4.2 12.6l4.1 4.1 1.4-1.4-4.1-4.1A7 7 0 0 0 11 4Zm0 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z"/></svg>
+          <span class="nav-label">Lead Scraper</span>
+          <span class="agent-dot" data-agent="scraper"></span>
+        </a>
+        <a class="nav-item" href="#outreach" data-view="outreach">
+          <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.4 2L12 12l7.6-5H4.4ZM20 8.2l-8 5.3-8-5.3V17h16V8.2Z"/></svg>
+          <span class="nav-label">Outreach Agent</span>
+          <span class="agent-dot" data-agent="outreach"></span>
+        </a>
+        <a class="nav-item" href="#pipeline" data-view="pipeline">
+          <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 4h4v16H4V4Zm6 0h4v10h-4V4Zm6 0h4v7h-4V4Z"/></svg>
+          <span class="nav-label">Pipeline CRM</span>
+          <span class="agent-dot" data-agent="pipeline"></span>
+        </a>
+
+        <span class="nav-section-label">Operations</span>
+        <a class="nav-item" href="#clients" data-view="clients">
+          <svg viewBox="0 0 24 24" class="nav-icon"><path d="M12 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-7 16a7 7 0 0 1 14 0v2H5v-2Zm2 0h10a5 5 0 0 0-10 0Z"/></svg>
+          <span class="nav-label">Clients</span>
+          <span class="agent-dot" data-agent="clients"></span>
+        </a>
+        <a class="nav-item" href="#analytics" data-view="analytics">
+          <svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 3v16h16v2H3V3h2Zm14.3 3.3 1.4 1.4L15 13.4l-3-3-4.3 4.3-1.4-1.4L12 7.6l3 3 4.3-4.3Z"/></svg>
+          <span class="nav-label">Analytics</span>
+          <span class="agent-dot" data-agent="analytics"></span>
+        </a>
+
+        <span class="nav-section-label">Finance</span>
+        <a class="nav-item" href="#finance" data-view="finance">
+          <svg viewBox="0 0 24 24" class="nav-icon"><path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm1 3v1.1c1.2.2 2.3.9 2.5 2.2h-1.7c-.2-.6-.7-.9-1.6-.9-.9 0-1.5.4-1.5 1 0 .5.4.8 1.7 1.1 1.9.4 3.2 1 3.2 2.7 0 1.4-1 2.3-2.6 2.6V18h-2v-1.2c-1.4-.3-2.5-1.1-2.6-2.5h1.7c.2.7.8 1.1 1.9 1.1 1.1 0 1.6-.5 1.6-1.1 0-.6-.5-.9-1.9-1.2-1.7-.4-3-1-3-2.6 0-1.3 1-2.2 2.3-2.5V7h2Z"/></svg>
+          <span class="nav-label">Finance</span>
+          <span class="agent-dot" data-agent="finance"></span>
+        </a>
+
+        <span class="nav-section-label">System</span>
+        <a class="nav-item" href="#settings" data-view="settings">
+          <svg viewBox="0 0 24 24" class="nav-icon"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm0 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm-1-8h2l.5 2.4a7.9 7.9 0 0 1 1.8 1l2.3-.8 1 1.7-1.8 1.6a8 8 0 0 1 0 2.2l1.8 1.6-1 1.7-2.3-.8a7.9 7.9 0 0 1-1.8 1L13 22h-2l-.5-2.4a7.9 7.9 0 0 1-1.8-1l-2.3.8-1-1.7 1.8-1.6a8 8 0 0 1 0-2.2L3.4 9.5l1-1.7 2.3.8a7.9 7.9 0 0 1 1.8-1L11 2Z"/></svg>
+          <span class="nav-label">Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="conn" id="conn-status">
+          <span class="conn-dot"></span>
+          <span class="conn-text">Connecting…</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main column -->
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menu-btn" aria-label="Toggle navigation">
+          <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/></svg>
+        </button>
+        <div class="topbar-title">
+          <h1 id="page-title">Overview</h1>
+          <p id="page-subtitle" class="topbar-sub">Your command center at a glance</p>
+        </div>
+        <div class="topbar-actions">
+          <div class="search-wrap">
+            <svg viewBox="0 0 24 24" class="search-ico"><path d="M11 4a7 7 0 1 0 4.2 12.6l4.1 4.1 1.4-1.4-4.1-4.1A7 7 0 0 0 11 4Z"/></svg>
+            <input id="global-search" type="search" placeholder="Search…  (Ctrl+K)" autocomplete="off" />
+          </div>
+          <div class="bell-wrap">
+            <button class="icon-btn" id="bell" aria-label="Notifications">
+              <svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0-6 6v3.5L4 16v1h16v-1l-2-3.5V9a6 6 0 0 0-6-6Z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+              <span id="bell-badge" class="bell-badge hidden">0</span>
+            </button>
+            <div id="notif-dropdown" class="notif-dropdown hidden"><!-- injected --></div>
+          </div>
+          <button class="btn btn-primary" id="quick-scrape-btn">
+            <svg viewBox="0 0 24 24" class="btn-ico"><path d="M12 5v14m-7-7h14"/></svg>
+            New Scrape
+          </button>
+        </div>
+      </header>
+
+      <main class="content" id="content">
+
+        <!-- ─── Overview ──────────────────────────────────────────────── -->
+        <section class="view" id="view-overview" data-view="overview">
+          <div class="kpi-grid" id="kpi-grid">
+            <!-- KPI cards injected -->
+          </div>
+
+          <div class="panel ai-panel" id="ai-panel">
+            <div class="panel-head">
+              <h2 class="panel-title">✦ AI Insights</h2>
+              <button class="btn btn-ghost btn-sm" data-action="ai-digest-refresh" id="digest-refresh">↻ Refresh</button>
+            </div>
+            <div id="digest-content" class="digest-content"><!-- injected --></div>
+            <form id="ask-form" class="ask-row">
+              <input id="ask-input" type="text" placeholder="Ask your dashboard anything… (e.g. who should we follow up with this week?)" autocomplete="off" />
+              <button type="submit" class="btn btn-primary btn-sm" id="ask-btn">Ask</button>
+            </form>
+            <div id="ask-answer" class="ask-answer hidden"></div>
+          </div>
+
+          <div class="overview-grid">
+            <div class="panel">
+              <div class="panel-head">
+                <h2 class="panel-title">Your Agents</h2>
+                <span class="panel-hint">Click an agent to open it</span>
+              </div>
+              <div class="agents-grid" id="agents-grid"><!-- injected --></div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <h2 class="panel-title">Recent Leads</h2>
+                <a class="panel-link" href="#outreach">View all</a>
+              </div>
+              <div id="recent-leads" class="recent-list"><!-- injected --></div>
+            </div>
+          </div>
+
+          <div class="overview-grid overview-grid--secondary">
+            <div class="panel">
+              <div class="panel-head">
+                <h2 class="panel-title">Today</h2>
+                <span class="panel-hint" id="today-hint"></span>
+              </div>
+              <form id="task-add-form" class="task-add-row">
+                <input id="task-add-input" type="text" placeholder="Add a task… (e.g. Call Radiance Spa)" autocomplete="off" />
+                <input id="task-add-date" type="date" title="Due date (optional)" />
+                <button type="submit" class="btn btn-ghost btn-sm">Add</button>
+              </form>
+              <div id="today-list" class="today-list"><!-- injected --></div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <h2 class="panel-title">Activity</h2>
+                <span class="panel-hint">Latest workspace events</span>
+              </div>
+              <div id="activity-feed" class="feed-list"><!-- injected --></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── Lead Scraper ──────────────────────────────────────────── -->
+        <section class="view" id="view-scraper" data-view="scraper" hidden>
+          <div class="panel scrape-panel">
+            <div class="panel-head">
+              <h2 class="panel-title">Find New Leads</h2>
+              <span class="panel-hint">Google Places · auto-qualified</span>
+            </div>
+            <form id="scrape-form" class="scrape-form">
+              <div class="form-group">
+                <label for="scrape-query">Search Query</label>
+                <input id="scrape-query" type="text" placeholder="e.g. life coaches" required />
+              </div>
+              <div class="form-group">
+                <label for="scrape-location">Location</label>
+                <input id="scrape-location" type="text" placeholder="e.g. Austin, TX" required />
+              </div>
+              <div class="form-group form-group--narrow">
+                <label for="scrape-max">Max Results</label>
+                <input id="scrape-max" type="number" value="20" min="1" max="60" />
+              </div>
+              <button type="submit" class="btn btn-primary btn-block" id="scrape-btn">
+                <svg viewBox="0 0 24 24" class="btn-ico spin-target"><path d="M21 12a9 9 0 1 1-2.6-6.3"/><path d="M21 4v5h-5"/></svg>
+                Run Scrape
+              </button>
+            </form>
+            <div class="scrape-filters">
+              <span class="filter-label">Save only</span>
+              <label class="opp-check opp-NO_WEBSITE">
+                <input type="checkbox" name="opp_filter" value="NO_WEBSITE" checked /><span>No Website</span>
+              </label>
+              <label class="opp-check opp-WEAK_ADVERTISING">
+                <input type="checkbox" name="opp_filter" value="WEAK_ADVERTISING" checked /><span>Weak Ads</span>
+              </label>
+              <label class="opp-check opp-HIGH_POTENTIAL">
+                <input type="checkbox" name="opp_filter" value="HIGH_POTENTIAL" checked /><span>High Potential</span>
+              </label>
+              <label class="opp-check opp-SCALING_CANDIDATE">
+                <input type="checkbox" name="opp_filter" value="SCALING_CANDIDATE" /><span>Scaling</span>
+              </label>
+            </div>
+            <div id="scrape-status" class="scrape-status hidden"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2 class="panel-title">Scrape History</h2>
+              <span class="panel-hint" id="scrape-history-hint"></span>
+            </div>
+            <div id="sessions-container" class="sessions-container">
+              <div class="skeleton-block"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── Outreach ──────────────────────────────────────────────── -->
+        <section class="view" id="view-outreach" data-view="outreach" hidden>
+          <div class="panel" id="send-queue-panel">
+            <div class="panel-head">
+              <h2 class="panel-title">Send Queue</h2>
+              <span id="send-queue-summary" class="panel-sub"></span>
+              <button class="btn btn-ghost btn-sm" id="send-queue-refresh">⟳ Refresh</button>
+              <button class="btn btn-ghost btn-sm" id="send-queue-clear">Clear pending</button>
+            </div>
+            <div id="send-queue-body"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <h2 class="panel-title">Outreach Queue</h2>
+              <button class="btn btn-ghost btn-sm" data-action="export-csv" data-kind="leads">⤓ CSV</button>
+              <div class="filter-pills" id="outreach-filters">
+                <button class="pill active" data-filter="">All</button>
+                <button class="pill" data-filter="new">New</button>
+                <button class="pill" data-filter="contacted">Contacted</button>
+                <button class="pill" data-filter="followed_up">Followed Up</button>
+                <button class="pill" data-filter="replied">Replied</button>
+                <button class="pill" data-filter="converted">Converted</button>
+              </div>
+            </div>
+            <div class="table-scroll">
+              <table class="leads-table" id="outreach-table">
+                <thead>
+                  <tr>
+                    <th>Business</th>
+                    <th>Email</th>
+                    <th class="col-center">Opportunity</th>
+                    <th class="col-center">Status</th>
+                    <th class="col-actions">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="outreach-body"></tbody>
+              </table>
+            </div>
+            <div id="outreach-empty" class="empty-state hidden"></div>
+          </div>
+        </section>
+
+        <!-- ─── Pipeline (Kanban) ─────────────────────────────────────── -->
+        <section class="view" id="view-pipeline" data-view="pipeline" hidden>
+          <div class="kanban" id="kanban"><!-- columns injected --></div>
+        </section>
+
+        <!-- ─── Clients ───────────────────────────────────────────────── -->
+        <section class="view" id="view-clients" data-view="clients" hidden>
+          <div id="clients-list-wrap">
+            <div class="panel">
+              <div class="panel-head">
+                <h2 class="panel-title">Client Accounts</h2>
+                <button class="btn btn-primary" data-action="new-client">+ New Client</button>
+              </div>
+              <div class="table-scroll">
+                <table class="leads-table">
+                  <thead>
+                    <tr>
+                      <th>Company</th>
+                      <th>Contact</th>
+                      <th class="col-center">Retainer</th>
+                      <th class="col-center">Status</th>
+                      <th class="col-center">Invoiced</th>
+                      <th class="col-actions">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="clients-body"></tbody>
+                </table>
+              </div>
+              <div id="clients-empty" class="empty-state hidden"></div>
+            </div>
+          </div>
+          <div id="client-detail" class="hidden"><!-- injected --></div>
+        </section>
+
+        <!-- ─── Finance ───────────────────────────────────────────────── -->
+        <section class="view" id="view-finance" data-view="finance" hidden>
+          <div class="kpi-grid" id="fin-kpis"><!-- injected --></div>
+
+          <div class="panel goal-panel" id="goal-panel"><!-- injected --></div>
+
+          <div class="charts-grid charts-grid--finance">
+            <div class="panel chart-panel">
+              <div class="panel-head"><h2 class="panel-title">Revenue vs Expenses</h2></div>
+              <div class="chart-box"><canvas id="chart-fin-monthly"></canvas></div>
+            </div>
+            <div class="panel chart-panel">
+              <div class="panel-head"><h2 class="panel-title">Expense Breakdown</h2></div>
+              <div class="chart-box"><canvas id="chart-fin-categories"></canvas></div>
+            </div>
+            <div class="panel chart-panel">
+              <div class="panel-head"><h2 class="panel-title">Revenue by Client</h2></div>
+              <div class="chart-box"><canvas id="chart-fin-byclient"></canvas></div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:22px">
+            <div class="panel-head">
+              <h2 class="panel-title">Invoices</h2>
+              <button class="btn btn-ghost btn-sm" data-action="export-csv" data-kind="invoices">⤓ CSV</button>
+              <button class="btn btn-primary" data-action="new-invoice">+ New Invoice</button>
+            </div>
+            <div class="table-scroll">
+              <table class="leads-table">
+                <thead>
+                  <tr>
+                    <th>Number</th><th>Client</th><th class="col-center">Total</th>
+                    <th class="col-center">Status</th><th class="col-center">Due</th>
+                    <th class="col-actions">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="invoices-body"></tbody>
+              </table>
+            </div>
+            <div id="invoices-empty" class="empty-state hidden"></div>
+          </div>
+
+          <div class="panel" style="margin-top:22px">
+            <div class="panel-head">
+              <h2 class="panel-title">Income &amp; Expenses</h2>
+              <button class="btn btn-ghost btn-sm" data-action="export-csv" data-kind="transactions">⤓ CSV</button>
+              <div class="filter-pills" id="tx-filters">
+                <button class="pill active" data-tx-filter="">All</button>
+                <button class="pill" data-tx-filter="income">Income</button>
+                <button class="pill" data-tx-filter="expense">Expenses</button>
+              </div>
+            </div>
+            <form id="tx-add-form" class="tx-add-row">
+              <select id="tx-type">
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+              </select>
+              <input id="tx-category" type="text" placeholder="Category (e.g. Software)" required />
+              <input id="tx-amount" type="number" min="0" step="0.01" placeholder="Amount" required />
+              <input id="tx-date" type="date" required />
+              <input id="tx-desc" type="text" placeholder="Description (optional)" />
+              <button type="submit" class="btn btn-ghost">Add</button>
+            </form>
+            <div class="table-scroll">
+              <table class="leads-table">
+                <thead>
+                  <tr>
+                    <th>Date</th><th>Category</th><th>Description</th>
+                    <th class="col-center">Client</th><th class="col-center">Amount</th>
+                    <th class="col-actions"></th>
+                  </tr>
+                </thead>
+                <tbody id="tx-body"></tbody>
+              </table>
+            </div>
+            <div id="tx-empty" class="empty-state hidden"></div>
+          </div>
+        </section>
+
+        <!-- ─── Analytics ─────────────────────────────────────────────── -->
+        <section class="view" id="view-analytics" data-view="analytics" hidden>
+          <div class="kpi-grid kpi-grid--rates" id="rate-grid"></div>
+          <div class="charts-grid">
+            <div class="panel chart-panel">
+              <div class="panel-head"><h2 class="panel-title">Leads Over Time</h2></div>
+              <div class="chart-box"><canvas id="chart-overtime"></canvas></div>
+            </div>
+            <div class="panel chart-panel">
+              <div class="panel-head"><h2 class="panel-title">Pipeline Funnel</h2></div>
+              <div class="chart-box"><canvas id="chart-funnel"></canvas></div>
+            </div>
+            <div class="panel chart-panel">
+              <div class="panel-head"><h2 class="panel-title">Opportunity Mix</h2></div>
+              <div class="chart-box"><canvas id="chart-opportunity"></canvas></div>
+            </div>
+            <div class="panel chart-panel">
+              <div class="panel-head"><h2 class="panel-title">Status Breakdown</h2></div>
+              <div class="chart-box"><canvas id="chart-status"></canvas></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── Settings ──────────────────────────────────────────────── -->
+        <section class="view" id="view-settings" data-view="settings" hidden>
+          <div class="settings-grid">
+            <div class="panel">
+              <div class="panel-head"><h2 class="panel-title">Sender Identity</h2></div>
+              <p class="panel-desc">Used to sign your outreach emails. Saved to the shared workspace — both partners use the same identity.</p>
+              <form id="settings-form" class="settings-form">
+                <div class="form-group">
+                  <label for="set-sender-name">Sender Name</label>
+                  <input id="set-sender-name" type="text" placeholder="e.g. Your Name" />
+                </div>
+                <div class="form-group">
+                  <label for="set-sender-phone">Sender Phone</label>
+                  <input id="set-sender-phone" type="text" placeholder="e.g. (555) 123-4567" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save Identity</button>
+                <span id="settings-saved" class="saved-flag hidden">Saved ✓</span>
+              </form>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head"><h2 class="panel-title">Integrations</h2></div>
+              <div class="integration-row">
+                <div class="integration-info">
+                  <span class="integration-name">Gmail</span>
+                  <span class="integration-desc">Send outreach &amp; follow-ups from your inbox</span>
+                </div>
+                <a class="btn btn-ghost" href="/auth" target="_blank" rel="noopener">Connect Gmail</a>
+              </div>
+              <div class="integration-row">
+                <div class="integration-info">
+                  <span class="integration-name">Google Places</span>
+                  <span class="integration-desc">Lead scraping source · set API key in .env</span>
+                </div>
+                <span class="integration-badge">Server-side</span>
+              </div>
+              <div class="integration-row integration-row--stack">
+                <div class="integration-info">
+                  <span class="integration-name">Email Open Tracking</span>
+                  <span class="integration-desc">Invisible pixel in outgoing emails — see who opened. Needs your public dashboard URL. Reply detection also requires reconnecting Gmail once (adds read access).</span>
+                </div>
+                <form id="tracking-settings-form" class="settings-form tracking-form">
+                  <div class="form-group">
+                    <label for="set-app-base-url">Public dashboard URL</label>
+                    <input id="set-app-base-url" type="url" placeholder="https://your-app.up.railway.app" />
+                  </div>
+                  <label class="opp-check opp-HIGH_POTENTIAL">
+                    <input type="checkbox" id="set-tracking-enabled" checked /><span>Tracking enabled</span>
+                  </label>
+                  <button type="submit" class="btn btn-primary">Save Tracking</button>
+                  <span id="tracking-settings-saved" class="saved-flag hidden">Saved ✓</span>
+                </form>
+              </div>
+              <div class="integration-row integration-row--stack">
+                <div class="integration-info">
+                  <span class="integration-name">Sending Pace</span>
+                  <span class="integration-desc">Spaces outreach out to avoid spam flags. Rapid sends auto-queue and go out one at a time, at a random gap within this range, up to a daily cap — and only during the sending window (Eastern / Florida time). Anything triggered outside those hours waits until the window reopens.</span>
+                </div>
+                <form id="pace-settings-form" class="settings-form tracking-form">
+                  <div class="form-group">
+                    <label for="set-gap-min">Min gap (seconds)</label>
+                    <input id="set-gap-min" type="number" min="15" step="5" placeholder="120" />
+                  </div>
+                  <div class="form-group">
+                    <label for="set-gap-max">Max gap (seconds)</label>
+                    <input id="set-gap-max" type="number" min="15" step="5" placeholder="300" />
+                  </div>
+                  <div class="form-group">
+                    <label for="set-daily-cap">Daily send cap</label>
+                    <input id="set-daily-cap" type="number" min="1" step="1" placeholder="40" />
+                  </div>
+                  <div class="form-group">
+                    <label for="set-window-start">Send from (ET)</label>
+                    <input id="set-window-start" type="time" />
+                  </div>
+                  <div class="form-group">
+                    <label for="set-window-end">Send until (ET)</label>
+                    <input id="set-window-end" type="time" />
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save Pace</button>
+                  <span id="pace-settings-saved" class="saved-flag hidden">Saved ✓</span>
+                </form>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head"><h2 class="panel-title">✦ AI (Claude)</h2></div>
+              <p class="panel-desc">Powers personalized outreach, lead briefs, insights and Q&amp;A. Get a key at <code>console.anthropic.com</code> — stored in the shared workspace, never shown again in full.</p>
+              <form id="ai-settings-form" class="settings-form">
+                <div class="form-group">
+                  <label for="set-anthropic-key">Claude API Key</label>
+                  <input id="set-anthropic-key" type="password" placeholder="sk-ant-…" autocomplete="off" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save API Key</button>
+                <span id="ai-settings-saved" class="saved-flag hidden">Saved ✓</span>
+              </form>
+              <div id="ai-status-line" class="persistence-state" style="margin-top:14px">Checking…</div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head"><h2 class="panel-title">Finance</h2></div>
+              <p class="panel-desc">Drives the goal bar and forecast on the Finance page. Shared between both partners.</p>
+              <form id="finance-settings-form" class="settings-form">
+                <div class="form-group">
+                  <label for="set-revenue-goal">Monthly Revenue Goal ($)</label>
+                  <input id="set-revenue-goal" type="number" min="0" step="100" placeholder="e.g. 10000" />
+                </div>
+                <div class="form-group">
+                  <label for="set-avg-deal">Average Deal Value ($) — used by the forecast</label>
+                  <input id="set-avg-deal" type="number" min="0" step="50" placeholder="defaults to avg retainer" />
+                </div>
+                <div class="form-group">
+                  <label for="set-invoice-prefix">Invoice Number Prefix</label>
+                  <input id="set-invoice-prefix" type="text" maxlength="6" placeholder="BS" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save Finance Settings</button>
+                <span id="finance-settings-saved" class="saved-flag hidden">Saved ✓</span>
+              </form>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head"><h2 class="panel-title">Data &amp; Persistence</h2></div>
+              <p class="panel-desc">All leads, notes, statuses and settings are stored in SQLite and saved automatically. On Railway, mount a volume at <code>/data</code> and set <code>DATABASE_PATH=/data/leads.db</code> so your data survives every redeploy.</p>
+              <div class="persistence-state" id="persistence-state">Checking storage…</div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Command palette (Ctrl+K) -->
+  <div id="cmdk" class="cmdk-overlay hidden" role="dialog" aria-modal="true">
+    <div class="cmdk">
+      <div class="cmdk-input-row">
+        <svg viewBox="0 0 24 24" class="cmdk-ico"><path d="M11 4a7 7 0 1 0 4.2 12.6l4.1 4.1 1.4-1.4-4.1-4.1A7 7 0 0 0 11 4Z"/></svg>
+        <input id="cmdk-input" type="text" placeholder="Jump to a lead, client, invoice or action…" autocomplete="off" />
+        <span class="cmdk-hint">esc</span>
+      </div>
+      <ul id="cmdk-results" class="cmdk-results"><!-- injected --></ul>
+    </div>
+  </div>
+
+  <!-- Email modal -->
+  <div id="email-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title" id="modal-title">Review &amp; Send</span>
+        <button id="modal-close" class="icon-btn" aria-label="Close">
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="modal-plan-chip" class="plan-chip hidden"><!-- injected --></div>
+        <div class="modal-field">
+          <label class="modal-label">To</label>
+          <div class="modal-to-row">
+            <input id="modal-to" type="email" placeholder="Enter recipient email…" />
+            <button id="modal-find-btn" class="btn btn-ghost btn-sm">Find Email</button>
+            <button id="modal-ai-btn" class="btn btn-ai btn-sm hidden" title="Rewrite this email with AI, personalized from their website">✦ AI Personalize</button>
+          </div>
+          <div id="modal-suggestions" class="modal-suggestions hidden"></div>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Subject</label>
+          <input id="modal-subject" type="text" class="modal-preview-subject" placeholder="Loading…" />
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Message</label>
+          <textarea id="modal-body" class="modal-preview-body" placeholder="Loading…"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="modal-cancel" class="btn btn-ghost">Cancel</button>
+        <button id="modal-send" class="btn btn-primary">Send Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm dialog -->
+  <div id="confirm-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal modal-sm">
+      <div class="modal-header"><span class="modal-title" id="confirm-title">Are you sure?</span></div>
+      <div class="modal-body"><p id="confirm-text" class="confirm-text"></p></div>
+      <div class="modal-footer">
+        <button id="confirm-cancel" class="btn btn-ghost">Cancel</button>
+        <button id="confirm-ok" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client modal (create / edit / convert) -->
+  <div id="client-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title" id="client-modal-title">New Client</span>
+        <button id="client-modal-close" class="icon-btn" aria-label="Close">
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-grid-2">
+          <div class="modal-field">
+            <label class="modal-label" for="cm-company">Company *</label>
+            <input id="cm-company" type="text" placeholder="e.g. Radiance Medical Spa" />
+          </div>
+          <div class="modal-field">
+            <label class="modal-label" for="cm-contact">Contact Name</label>
+            <input id="cm-contact" type="text" placeholder="e.g. Dana Reyes" />
+          </div>
+          <div class="modal-field">
+            <label class="modal-label" for="cm-email">Email</label>
+            <input id="cm-email" type="email" placeholder="billing@client.com" />
+          </div>
+          <div class="modal-field">
+            <label class="modal-label" for="cm-phone">Phone</label>
+            <input id="cm-phone" type="text" placeholder="(555) 123-4567" />
+          </div>
+          <div class="modal-field">
+            <label class="modal-label" for="cm-retainer">Monthly Retainer ($)</label>
+            <input id="cm-retainer" type="number" min="0" step="50" placeholder="0" />
+          </div>
+          <div class="modal-field">
+            <label class="modal-label" for="cm-status">Status</label>
+            <select id="cm-status">
+              <option value="active">Active</option>
+              <option value="paused">Paused</option>
+              <option value="churned">Churned</option>
+            </select>
+          </div>
+          <div class="modal-field">
+            <label class="modal-label" for="cm-start">Start Date</label>
+            <input id="cm-start" type="date" />
+          </div>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label" for="cm-service">Service Description</label>
+          <input id="cm-service" type="text" placeholder="e.g. Website rebuild + monthly ads management" />
+        </div>
+        <div class="modal-field">
+          <label class="modal-label" for="cm-notes">Notes</label>
+          <textarea id="cm-notes" rows="3" placeholder="Internal notes…"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="client-modal-cancel" class="btn btn-ghost">Cancel</button>
+        <button id="client-modal-save" class="btn btn-primary">Save Client</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI lead brief modal -->
+  <div id="brief-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title" id="brief-modal-title">✦ AI Lead Brief</span>
+        <button id="brief-modal-close" class="icon-btn" aria-label="Close">
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="brief-modal-body"><!-- injected --></div>
+      <div class="modal-footer">
+        <button id="brief-modal-refresh" class="btn btn-ghost">↻ Regenerate</button>
+        <button id="brief-modal-ok" class="btn btn-primary">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Invoice modal -->
+  <div id="invoice-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <span class="modal-title" id="invoice-modal-title">New Invoice</span>
+        <button id="invoice-modal-close" class="icon-btn" aria-label="Close">
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-grid-2">
+          <div class="modal-field">
+            <label class="modal-label" for="iv-client">Client *</label>
+            <select id="iv-client"></select>
+          </div>
+          <div class="modal-field">
+            <label class="modal-label" for="iv-tax">Tax Rate (%)</label>
+            <input id="iv-tax" type="number" min="0" step="0.1" placeholder="0" />
+          </div>
+          <div class="modal-field">
+            <label class="modal-label" for="iv-issue">Issue Date</label>
+            <input id="iv-issue" type="date" />
+          </div>
+          <div class="modal-field">
+            <label class="modal-label" for="iv-due">Due Date *</label>
+            <input id="iv-due" type="date" />
+          </div>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label" for="iv-package">Load a Package (optional)</label>
+          <select id="iv-package">
+            <option value="">Custom — start blank</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Line Items *</label>
+          <div id="iv-lines"><!-- line item rows injected --></div>
+          <button type="button" class="btn btn-ghost btn-sm" id="iv-add-line">+ Add line</button>
+        </div>
+        <div class="iv-totals" id="iv-totals"><!-- injected --></div>
+        <div class="modal-field">
+          <label class="modal-label" for="iv-notes">Notes (shown on invoice)</label>
+          <input id="iv-notes" type="text" placeholder="e.g. Payment by bank transfer within 14 days" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="invoice-modal-cancel" class="btn btn-ghost">Cancel</button>
+        <button id="invoice-modal-save" class="btn btn-primary">Save Draft</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

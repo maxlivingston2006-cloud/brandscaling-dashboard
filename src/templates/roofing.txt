@@ -1,0 +1,12 @@
+Subject: {{business_name}} - more roofing jobs in {{city}}?
+
+Hi {{first_name}},
+
+I came across {{business_name}} while looking at roofing companies around {{city}}. {{observation}}
+
+I run Meta (Facebook and Instagram) ads for roofers, putting you in front of homeowners dealing with leaks, storm damage, and full roof replacements. I'll run the first 30 days completely free. You only cover the ad spend to Meta directly, so you can see real leads before paying me anything.
+
+Worth a 15-minute call this week?
+
+{{sender_name}}
+ME Growth · {{sender_phone}}

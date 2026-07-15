@@ -1,0 +1,12 @@
+Subject: Found {{business_name}} - but your customers can't find you
+
+Hi,
+
+I was searching for {{business_type}}s in your area and noticed {{business_name}} doesn't have a website — which means anyone looking for your services right now can't find you.
+
+I build websites for local businesses and run paid ads on Google and Meta. I'd like to do the first 30 days of ads completely free so you can see real results before spending anything.
+
+Worth a 15-minute call this week?
+
+{{sender_name}}
+{{sender_phone}}

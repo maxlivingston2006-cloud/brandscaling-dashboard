@@ -1,0 +1,8 @@
+Subject: Free 30-day ad trial for {{business_name}}
+
+Hi there,
+
+I came across {{business_name}} and wanted to reach out — I run paid ads on Meta and Google for {{business_type}}s, and I help them bring in a steady flow of leads without relying on referrals or word of mouth. I'd like to run your first 30 days completely free so you can see real results before spending a dollar. Would you be open to a quick 15-minute call this week to see if it's a fit?
+
+{{sender_name}}
+{{sender_phone}}

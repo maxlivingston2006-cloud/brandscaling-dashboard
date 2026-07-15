@@ -1,0 +1,12 @@
+Subject: {{business_name}} - more jobs from {{city}}?
+
+Hi {{first_name}},
+
+I came across {{business_name}} while looking at local service businesses around {{city}}. {{observation}}
+
+I run Meta (Facebook and Instagram) ads for local service businesses, putting you in front of nearby customers right when they need what you do. I'll run the first 30 days completely free. You only cover the ad spend to Meta directly, so you can see real leads before paying me anything.
+
+Worth a 15-minute call this week?
+
+{{sender_name}}
+ME Growth · {{sender_phone}}

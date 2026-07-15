@@ -1,0 +1,29 @@
+{
+  "name": "outreach-command-center",
+  "version": "1.0.0",
+  "description": "Agency command center — lead scraping, AI outreach, pipeline CRM, clients, finance & analytics",
+  "main": "server.js",
+  "engines": {
+    "node": ">=20.17.0"
+  },
+  "scripts": {
+    "build": "npm rebuild sqlite3",
+    "start": "node server.js",
+    "dev": "node --use-system-ca server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.104.1",
+    "axios": "^1.16.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "googleapis": "^173.0.0",
+    "nodemailer": "^8.0.10",
+    "sqlite3": "^6.0.1"
+  }
+}

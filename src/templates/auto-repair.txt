@@ -1,0 +1,12 @@
+Subject: {{business_name}} - more cars in the bay in {{city}}?
+
+Hi {{first_name}},
+
+I came across {{business_name}} while looking at auto repair shops around {{city}}. {{observation}}
+
+I run Meta (Facebook and Instagram) ads for auto repair shops, reaching local drivers who need repairs and maintenance now. I'll run the first 30 days completely free. You only cover the ad spend to Meta directly, so you can see real leads before paying me anything.
+
+Worth a 15-minute call this week?
+
+{{sender_name}}
+ME Growth · {{sender_phone}}

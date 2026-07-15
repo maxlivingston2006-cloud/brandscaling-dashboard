@@ -1,0 +1,7 @@
+node_modules/
+.env
+leads.db
+client_secret*.json
+
+# stray brand logo at repo root (not part of the app)
+/logo-dark.png
