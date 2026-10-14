@@ -10,7 +10,7 @@
     "build": "npm rebuild sqlite3",
     "start": "node server.js",
     "dev": "node --use-system-ca server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test"
   },
   "keywords": [],
   "author": "",

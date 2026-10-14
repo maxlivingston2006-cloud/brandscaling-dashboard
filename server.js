@@ -26,7 +26,7 @@ const {
 } = require('./src/finance');
 const ai = require('./src/ai');
 const { updateLeadAiBrief, updateLeadScore, recordEmailOpen } = require('./src/database');
-const { computeScore, backfillScores } = require('./src/scoring');
+const { computeScore, getScoreBreakdown, backfillScores } = require('./src/scoring');
 const replyChecker  = require('./src/reply-checker');
 const { startQueueWorker } = require('./src/queue-worker');
 const { gatherReportData, buildReportHtml, build404Html } = require('./src/report');
@@ -162,6 +162,40 @@ app.get('/api/leads', async (req, res) => {
       leads = leads.filter(l => l.status === req.query.status);
     }
     res.json(leads);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/leads/:id/intelligence — explainable score + enriched company facts
+// ---------------------------------------------------------------------------
+app.get('/api/leads/:id/intelligence', async (req, res) => {
+  try {
+    const lead = await getLeadById(req.params.id);
+    if (!lead) return res.status(404).json({ error: 'Lead not found' });
+
+    const score = getScoreBreakdown(lead);
+    const yearFounded = Number(lead.year_founded) || null;
+    const yearsOperating = yearFounded
+      ? Math.max(new Date().getFullYear() - yearFounded, 0)
+      : null;
+    const strongest = [...score.factors].sort((a, b) => b.points - a.points)[0];
+    const weakest = [...score.factors].sort((a, b) => (a.points / a.max_points) - (b.points / b.max_points))[0];
+
+    res.json({
+      lead,
+      intelligence: {
+        owner_name: lead.owner_name || null,
+        employee_count: Number(lead.employee_count) || null,
+        year_founded: yearFounded,
+        years_operating: yearsOperating,
+        company_summary: lead.company_summary || null,
+      },
+      score,
+      explanation: `${lead.business_name} scores ${score.total}/100. Its strongest signal is ${strongest.label.toLowerCase()}; the clearest area to improve is ${weakest.label.toLowerCase()}.`,
+      data_note: 'Owner, employee count, founding year, and company summary are fictional demo enrichment. In production, connect an approved enrichment provider or CRM.',
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
