@@ -458,6 +458,13 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .recent-main { min-width: 0; flex: 1; }
 .recent-name { font-weight: 600; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .recent-sub  { font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.company-link {
+  appearance: none; padding: 0; border: 0; background: none; color: var(--text);
+  font: inherit; font-weight: 700; text-align: left; cursor: pointer;
+}
+.company-link:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.company-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.company-site-link { margin-left: 4px; color: var(--muted); font-size: 12px; }
 
 /* ─── Scrape form ────────────────────────────────────────────────────── */
 .scrape-panel { margin-bottom: 1px; }
@@ -918,6 +925,7 @@ tbody tr:hover { background: rgba(255,255,255,0.025); }
   overflow: hidden;
 }
 .modal-sm { max-width: 420px; }
+.modal-company { max-width: 780px; max-height: min(88vh, 860px); display: flex; flex-direction: column; }
 .modal-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 16px 20px;
@@ -925,6 +933,7 @@ tbody tr:hover { background: rgba(255,255,255,0.025); }
 }
 .modal-title { font-weight: 800; font-size: 15px; letter-spacing: -0.04em; }
 .modal-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.company-modal-body { overflow-y: auto; }
 .modal-field { display: flex; flex-direction: column; gap: 7px; }
 .modal-label {
   font-size: 0.72rem; font-weight: 700;
@@ -1128,6 +1137,37 @@ tbody tr:hover { background: rgba(255,255,255,0.025); }
 .score-warm { background: rgba(245,158,11,.14); color: var(--amber);  border: 1px solid rgba(245,158,11,.3); }
 .score-cold { background: var(--surface-3);     color: var(--muted);  border: 1px solid var(--border); }
 
+/* ─── Company intelligence ──────────────────────────────────────────── */
+.company-loading { padding: 46px 12px; text-align: center; color: var(--muted); }
+.company-intel-hero { display: grid; grid-template-columns: 112px 1fr; gap: 20px; align-items: center; }
+.company-score {
+  width: 108px; height: 108px; display: grid; place-content: center; text-align: center;
+  background: radial-gradient(circle, rgba(52,212,104,.16), rgba(52,212,104,.035));
+  border: 1px solid var(--accent-glow);
+}
+.company-score strong { display: block; color: var(--accent); font-size: 35px; line-height: 1; letter-spacing: -.06em; }
+.company-score span { display: block; margin-top: 5px; color: var(--muted); font-size: 12px; }
+.company-tier { color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+.company-intel-summary h3 { margin: 5px 0 7px; font-size: 22px; letter-spacing: -.04em; }
+.company-intel-summary p, .company-why p { margin: 0; color: var(--text-2); font-size: 13px; line-height: 1.55; }
+.company-why { padding: 13px 15px; border-left: 3px solid var(--accent); background: var(--accent-soft); }
+.company-why strong, .company-section-title { display: block; margin-bottom: 5px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.company-facts { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--border); }
+.company-fact { min-width: 0; padding: 12px 14px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.company-fact:nth-child(3n) { border-right: 0; }
+.company-fact:nth-last-child(-n+3) { border-bottom: 0; }
+.company-fact span { display: block; margin-bottom: 5px; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.company-fact strong { display: block; overflow: hidden; color: var(--text); font-size: 12.5px; text-overflow: ellipsis; }
+.score-breakdown { display: flex; flex-direction: column; gap: 13px; }
+.score-factor-head { display: flex; justify-content: space-between; gap: 12px; font-size: 12.5px; }
+.score-factor-head span { color: var(--accent); font-weight: 800; }
+.score-factor-bar { height: 4px; margin-top: 6px; overflow: hidden; background: var(--surface-3); }
+.score-factor-bar span { display: block; height: 100%; background: var(--accent); }
+.score-factor p { margin: 5px 0 0; color: var(--muted); font-size: 11.5px; line-height: 1.45; }
+.company-actions-line { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-top: 2px; }
+.company-actions-line a, .company-actions-line > span:last-child { margin-left: auto; color: var(--text-2); font-size: 12px; }
+.company-data-note { padding: 10px 12px; color: var(--muted); background: var(--surface-2); border: 1px solid var(--border); font-size: 10.5px; line-height: 1.45; }
+
 .eng-dot { display: inline-block; margin-left: 7px; vertical-align: middle; cursor: default; }
 .eng-dot.sent { width: 8px; height: 8px; border-radius: 50%; background: var(--faint); }
 .eng-dot.opened { font-size: 12px; filter: drop-shadow(0 0 6px var(--accent-glow)); }
@@ -1207,6 +1247,14 @@ tbody tr:hover { background: rgba(255,255,255,0.025); }
   .scrape-form { grid-template-columns: 1fr; }
   .search-wrap { display: none; }
   .filter-pills { width: 100%; }
+  .company-intel-hero { grid-template-columns: 78px 1fr; }
+  .company-score { width: 74px; height: 74px; }
+  .company-score strong { font-size: 27px; }
+  .company-facts { grid-template-columns: 1fr 1fr; }
+  .company-fact:nth-child(3n) { border-right: 1px solid var(--border); }
+  .company-fact:nth-child(2n) { border-right: 0; }
+  .company-fact:nth-last-child(-n+3) { border-bottom: 1px solid var(--border); }
+  .company-fact:nth-last-child(-n+2) { border-bottom: 0; }
 }
 
 /* ─── Reduced motion ─────────────────────────────────────────────────── */

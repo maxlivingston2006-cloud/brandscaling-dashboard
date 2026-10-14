@@ -237,7 +237,7 @@ function renderOverview() {
     <div class="recent-row">
       <div class="recent-avatar">${esc((l.business_name || '?').charAt(0).toUpperCase())}</div>
       <div class="recent-main">
-        <div class="recent-name">${esc(l.business_name)}</div>
+        <button class="company-link recent-name" data-action="company-intel" data-id="${l.id}">${esc(l.business_name)}</button>
         <div class="recent-sub">${esc(l.category || '—')} · ${esc(l.address || '')}</div>
       </div>
       <span class="badge badge-${l.status}">${STATUS_LABELS[l.status] || l.status}</span>
@@ -444,9 +444,7 @@ function buildScraperRow(lead) {
       <td class="td-name">
         <div class="td-biz-name">
           ${scoreBadge(lead.score)}
-          ${lead.website
-            ? `<a href="${esc(lead.website)}" target="_blank" rel="noopener">${esc(lead.business_name)}</a>`
-            : esc(lead.business_name)}
+          <button class="company-link" data-action="company-intel" data-id="${lead.id}">${esc(lead.business_name)}</button>
           ${engagementDot(lead)}
         </div>
         <div class="td-address" title="${esc(lead.address)}">${esc(lead.address)}</div>
@@ -588,9 +586,8 @@ function buildOutreachRow(lead) {
     <tr data-id="${lead.id}">
       <td class="td-name">
         ${scoreBadge(lead.score)}
-        ${lead.website
-          ? `<a href="${esc(lead.website)}" target="_blank" rel="noopener">${esc(lead.business_name)}</a>`
-          : esc(lead.business_name)}
+        <button class="company-link" data-action="company-intel" data-id="${lead.id}">${esc(lead.business_name)}</button>
+        ${lead.website ? `<a class="company-site-link" href="${esc(lead.website)}" target="_blank" rel="noopener" title="Open website">↗</a>` : ''}
         ${engagementDot(lead)}
         <div class="td-address">${esc(lead.category || '')} · ${ratingStars(lead.google_rating)} ${lead.google_rating ?? ''}</div>
       </td>
@@ -640,7 +637,7 @@ function buildKanCard(lead) {
     : (isClient ? '<span class="kan-client-flag">🤝 Client</span>' : '');
   return `
     <div class="kan-card" draggable="true" data-id="${lead.id}">
-      <div class="kan-card-name">${esc(lead.business_name)}</div>
+      <button class="company-link kan-card-name" data-action="company-intel" data-id="${lead.id}" draggable="false">${esc(lead.business_name)}</button>
       <div class="kan-card-cat">${esc(lead.category || '—')}</div>
       <div class="kan-card-foot">
         ${oppBadge(lead.opportunity_type)}
@@ -1485,10 +1482,79 @@ function openConfirm(title, text, onOk) {
 }
 function closeConfirm() { $('confirm-modal').classList.add('hidden'); confirmFn = null; }
 
+function companyScoreLabel(score) {
+  if (score >= 80) return 'Priority lead';
+  if (score >= 65) return 'Strong fit';
+  if (score >= 45) return 'Developing fit';
+  return 'Early opportunity';
+}
+
+function factHtml(label, value) {
+  return `<div class="company-fact"><span>${esc(label)}</span><strong>${esc(value ?? 'Not available')}</strong></div>`;
+}
+
+function closeCompanyModal() { $('company-modal').classList.add('hidden'); }
+
+async function openCompanyModal(id) {
+  const lead = findLead(id);
+  $('company-modal-title').textContent = lead ? lead.business_name : 'Company Intelligence';
+  $('company-modal-body').innerHTML = '<div class="company-loading">Building the company intelligence view…</div>';
+  $('company-modal').classList.remove('hidden');
+
+  try {
+    const data = await api('GET', `/api/leads/${id}/intelligence`);
+    const l = data.lead;
+    const intel = data.intelligence;
+    const score = data.score;
+    const facts = [
+      ['Owner / decision maker', intel.owner_name],
+      ['Estimated employees', intel.employee_count ? `${intel.employee_count} people` : null],
+      ['Founded', intel.year_founded],
+      ['Years operating', intel.years_operating != null ? `${intel.years_operating} years` : null],
+      ['Category', l.category],
+      ['Location', l.address],
+    ].map(([label, value]) => factHtml(label, value)).join('');
+    const factors = score.factors.map(factor => {
+      const pct = Math.max(0, Math.min((factor.points / factor.max_points) * 100, 100));
+      const points = Number.isInteger(factor.points) ? factor.points : factor.points.toFixed(1);
+      return `<div class="score-factor">
+        <div class="score-factor-head"><strong>${esc(factor.label)}</strong><span>+${points} / ${factor.max_points}</span></div>
+        <div class="score-factor-bar"><span style="width:${pct}%"></span></div>
+        <p>${esc(factor.reason)}</p>
+      </div>`;
+    }).join('');
+
+    $('company-modal-title').textContent = l.business_name;
+    $('company-modal-body').innerHTML = `
+      <div class="company-intel-hero">
+        <div class="company-score"><strong>${score.total}</strong><span>/100</span></div>
+        <div class="company-intel-summary">
+          <span class="company-tier">${companyScoreLabel(score.total)}</span>
+          <h3>${esc(l.business_name)}</h3>
+          <p>${esc(intel.company_summary || 'Company summary is not available yet.')}</p>
+        </div>
+      </div>
+      <div class="company-why"><strong>Why this score</strong><p>${esc(data.explanation)}</p></div>
+      <div class="company-facts">${facts}</div>
+      <div class="score-breakdown">
+        <div class="company-section-title">Score breakdown</div>
+        ${factors}
+      </div>
+      <div class="company-actions-line">
+        ${statusBadge(l)} ${oppBadge(l.opportunity_type)}
+        ${l.website ? `<a href="${esc(l.website)}" target="_blank" rel="noopener">Visit website ↗</a>` : '<span>No website found</span>'}
+      </div>
+      <div class="company-data-note"><strong>Demo data note:</strong> ${esc(data.data_note)}</div>`;
+  } catch (err) {
+    $('company-modal-body').innerHTML = `<div class="empty-state">Could not load company intelligence: ${esc(err.message)}</div>`;
+  }
+}
+
 /* ─── Actions ────────────────────────────────────────────────────────── */
 async function handleAction(btn) {
   const action = btn.dataset.action;
   const id = btn.dataset.id;
+  if (action === 'company-intel') return openCompanyModal(id);
   if (action === 'contact' || action === 'followup') return openEmailModal(id, action);
 
   if (action === 'new-client')  return openClientModal();
@@ -1738,6 +1804,9 @@ function wireStaticEvents() {
   }
 
   $('menu-btn').addEventListener('click', () => sidebar.classList.toggle('open'));
+  $('company-modal-close').addEventListener('click', closeCompanyModal);
+  $('company-modal-ok').addEventListener('click', closeCompanyModal);
+  $('company-modal').addEventListener('click', (e) => { if (e.target === $('company-modal')) closeCompanyModal(); });
   $('quick-scrape-btn').addEventListener('click', () => {
     location.hash = '#scraper';
     setTimeout(() => $('scrape-query') && $('scrape-query').focus(), 60);
@@ -2010,7 +2079,7 @@ function wireStaticEvents() {
 
   // Esc closes modals · Ctrl/Cmd+K opens the command palette
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') { closeEmailModal(); closeConfirm(); closeClientModal(); closeInvoiceModal(); closeBriefModal(); closeCmdk(); toggleNotifDropdown(true); }
+    if (e.key === 'Escape') { closeEmailModal(); closeConfirm(); closeClientModal(); closeInvoiceModal(); closeBriefModal(); closeCompanyModal(); closeCmdk(); toggleNotifDropdown(true); }
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openCmdk(); }
   });
 }
