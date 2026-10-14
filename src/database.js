@@ -77,6 +77,9 @@ db.serialize(() => {
     'ALTER TABLE leads ADD COLUMN email_searched INTEGER DEFAULT 0',
     'ALTER TABLE leads ADD COLUMN owner_name TEXT',
     'ALTER TABLE leads ADD COLUMN call_outcome TEXT',
+    'ALTER TABLE leads ADD COLUMN employee_count INTEGER',
+    'ALTER TABLE leads ADD COLUMN year_founded INTEGER',
+    'ALTER TABLE leads ADD COLUMN company_summary TEXT',
   ]) {
     db.run(col, (err) => {
       if (err && !err.message.includes('duplicate column name')) {
@@ -303,6 +306,8 @@ async function insertLead(lead) {
     website = null, google_rating, review_count,
     email, opportunity_type = null, notes = null,
     session_id = null, website_status = null,
+    owner_name = null, employee_count = null, year_founded = null,
+    company_summary = null,
     date_added = new Date().toISOString(),
     date_contacted = null, follow_up_date = null,
   } = lead;
@@ -311,10 +316,12 @@ async function insertLead(lead) {
     `INSERT OR IGNORE INTO leads
       (business_name, category, address, phone, website, google_rating,
        review_count, email, opportunity_type, notes, session_id, website_status,
+       owner_name, employee_count, year_founded, company_summary,
        date_added, date_contacted, follow_up_date)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [business_name, category, address, phone, website, google_rating,
      review_count, email, opportunity_type, notes, session_id, website_status,
+     owner_name, employee_count, year_founded, company_summary,
      date_added, date_contacted, follow_up_date]
   );
 }
